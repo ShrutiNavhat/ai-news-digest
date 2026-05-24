@@ -15,14 +15,14 @@ export default function App() {
   const [result, setResult] = useState('');
   const [error, setError] = useState('');
 
-  // Auxiliary state to capture the snapshot text for side-by-side rendering
+  
   const [submittedText, setSubmittedText] = useState(''); 
 
   const handleTextChange = (e) => {
     const val = e.target.value;
     setText(val);
     
-    // Character Limit Handling (Warn at 3500, block at 4000)
+    
     if (val.length >= 4000) {
       setError('Hard block reached: Maximum 4,000 characters allowed.');
     } else if (val.length >= 3500) {
@@ -37,7 +37,7 @@ export default function App() {
     setError('');
     setResult('');
 
-    // Input Validation Edge Cases
+    
     if (!text.trim()) {
       setError('Empty input: Please paste a news article before submitting.');
       return;
@@ -51,7 +51,7 @@ export default function App() {
       return;
     }
 
-    // REQUIRED CONCEPT: sanitize input using filter() to strip out blank rows
+    
     const sanitizedText = text
       .split('\n')
       .map(line => line.trim())
@@ -62,7 +62,7 @@ export default function App() {
     setSubmittedText(sanitizedText);
 
     try {
-      // REQUIRED CONCEPT: async/await API call inside try/catch
+      
       const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/digest`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -129,7 +129,6 @@ export default function App() {
           </div>
         </div>
 
-        {/* Duplicate Submit guard: Button is disabled while loading flag is true */}
         <button
           type="submit"
           disabled={loading || text.length > 4000}
@@ -155,7 +154,7 @@ export default function App() {
         </div>
       )}
 
-      {/* Side by Side Display Container */}
+      
       {(submittedText || result) && (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginTop: '3rem' }}>
           <div style={{ padding: '1.5rem', border: '1px solid #e0e0e0', borderRadius: '8px', backgroundColor: '#fdfdfd' }}>

@@ -11,7 +11,7 @@ app.use(express.json());
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-// System configuration for dynamic prompt building
+
 const PROMPT_CONFIG = [
   { id: 'system', text: 'You are an expert news analyst.' },
   { id: 'summary', text: 'Provide a concise summary of the text below in exactly 5 sentences, using plain English.' },
@@ -40,13 +40,13 @@ app.post('/api/digest', async (req, res) => {
     }
 
     
-// Call LLM using async/await inside try/catch
+
     const chatCompletion = await groq.chat.completions.create({
       messages: [
         { role: 'system', content: promptInstructions.system },
         { role: 'user', content: `${promptInstructions.instruction}\n\nText:\n${text}` }
       ],
-      model: 'llama-3.1-8b-instant', //  Updated to the active production model
+      model: 'llama-3.1-8b-instant', 
       temperature: 0.3, 
     });
 
